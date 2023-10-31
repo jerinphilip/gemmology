@@ -1,13 +1,18 @@
 #ifndef GEMMOLOGY_H
 #define GEMMOLOGY_H
 
-#include "gemmology_fwd.h"
-
 #include <cstdint>
 #include <cstring>
 #include <tuple>
-
 #include <xsimd/xsimd.hpp>
+
+#include "gemmology_fwd.h"
+
+#if defined(__x86_64__)
+// For portable SIMD on x86_64 (See;
+// https://stackoverflow.com/a/11230437/4565794)
+#include <immintrin.h>
+#endif
 
 namespace gemmology {
 
