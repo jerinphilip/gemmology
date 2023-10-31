@@ -19,7 +19,7 @@ namespace {
 
 namespace kernel {
 
-#ifdef __AVX512BW__
+#ifdef USE_AVX512
 template <class Arch>
 std::tuple<xsimd::batch<int8_t, Arch>, xsimd::batch<int8_t, Arch>>
 interleave(xsimd::batch<int8_t, Arch> first, xsimd::batch<int8_t, Arch> second,
@@ -113,7 +113,7 @@ PermuteSummer(xsimd::batch<int32_t, Arch> pack0123,
 }
 #endif
 
-#ifdef __AVX2__
+#ifdef USE_AVX2
 template <class Arch>
 std::tuple<xsimd::batch<int8_t, Arch>, xsimd::batch<int8_t, Arch>>
 interleave(xsimd::batch<int8_t, Arch> first, xsimd::batch<int8_t, Arch> second,
@@ -199,7 +199,7 @@ PermuteSummer(xsimd::batch<int32_t, Arch> pack0123,
 }
 #endif
 
-#ifdef __SSSE3__
+#ifdef USE_SSSE3
 
 template <class Arch>
 inline xsimd::batch<int16_t, Arch>
@@ -216,7 +216,7 @@ madd(xsimd::batch<int8_t, Arch> x, xsimd::batch<int8_t, Arch> y,
 }
 #endif
 
-#ifdef __SSE2__
+#ifdef USE_SSE2
 template <class Arch>
 std::tuple<xsimd::batch<int8_t, Arch>, xsimd::batch<int8_t, Arch>>
 interleave(xsimd::batch<int8_t, Arch> first, xsimd::batch<int8_t, Arch> second,
@@ -661,7 +661,7 @@ QuantizerGrab(const float *input, xsimd::batch<float, Arch> quant_mult_reg) {
                   quant_mult_reg);
 }
 
-#ifdef __AVX512BW__
+#ifdef USE_AVX512
 inline __m512 Concat(const __m256 first, const __m256 second) {
   // INTGEMM_AVX512DQ but that goes with INTGEMM_AVX512BW anyway.
   return _mm512_insertf32x8(_mm512_castps256_ps512(first), second, 1);
